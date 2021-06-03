@@ -1,8 +1,10 @@
 const express = require('express');
 const http = require('http');
-const userRoute = require('./routes/user');
 var bodyParser = require('body-parser');
 const path = require('path');
+
+const userRoute = require('./routes/user');
+const recipeRoute = require('./routes/recipe');
 
 const app = express();
 let port = 3000;
@@ -12,6 +14,7 @@ app.set('views', path.join(__dirname, 'view'));
 
 app.use(express.json());
 app.use('/user', userRoute);
+app.use('/recipe', recipeRoute);
 
 // app.get('/', function(req, res) {
 //     res.render('./page/index.ejs');

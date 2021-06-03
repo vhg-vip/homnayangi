@@ -15,11 +15,18 @@ const pool = mysql.createPool(settings);
 const promisePool = pool.promise();
 
 const getUsers = async () => {
-    const sql = "SELECT * FROM  tbl_user";
+    let sql = "SELECT * FROM  tbl_user";
+    const [rows, fields] = await promisePool.query(sql);
+    return rows;
+}
+
+const getRecipes = async () => {
+    let sql = "SELECT * FROM tbl_recipe";
     const [rows, fields] = await promisePool.query(sql);
     return rows;
 }
 
 module.exports = {
-    getUsers: getUsers
+    getUsers: getUsers,
+    getRecipes: getRecipes
 }

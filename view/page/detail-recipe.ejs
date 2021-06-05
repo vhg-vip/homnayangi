@@ -1,0 +1,41 @@
+<%- include('../layout/header.ejs') -%>
+
+<link rel="stylesheet" href="../../stylesheets/detail-recipe.css">
+
+<div class="container">
+    <div class="post_container">
+        <div class="info">
+            <img src="../../assets/user.svg" alt="">
+            <p class="username">Admin</p>
+            <p class="time">May 15, 2021</p>
+        </div>
+        <p class="recipe-name">Công thức làm bánh Hamburger</p>
+        <img class="recipe-img" src="../../assets/burger.svg" alt="" width="100%">
+
+        <div class="content">
+            <p class="title">Nguyên liệu</p>
+            <ul>
+                <li>Thịt bò: 500 gr.</li>
+                <li>Trứng gà: 3 quả.</li>
+                <li>Khoai tây: 5 củ.</li>
+                <li>Hành tây: 1 củ.</li>
+            </ul>
+            <p class="title">Cách làm</p>
+            <p>1. Sơ chế nguyên liệu</p>
+        </div>
+
+        <div class="rating">
+            <div class="rate">
+                <i class="fas fa-star fill-star"></i>
+                <i class="fas fa-star fill-star"></i>
+                <i class="fas fa-star fill-star"></i>
+                <i class="fas fa-star fill-star"></i>
+                <i class="fas fa-star empty-star"></i>
+            </div>
+            <div class="like">
+                <i class="far fa-heart unlike d-none"></i>
+                <i class="fas fa-heart liked"></i>
+            </div>
+        </div>
+    </div>
+</div>

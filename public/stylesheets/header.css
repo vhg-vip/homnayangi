@@ -1,0 +1,21 @@
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.nav-link{
+    font-size: 18px;
+    font-weight: 400;
+    margin-right: 28px;
+    color: black !important;
+}
+.active .nav-link{
+    color: #84947B !important;
+}
+.nav-link .icon{
+    color: #84947B !important;
+}
+.banner{
+    border-bottom: solid 1px #EBEEEA;
+    margin-bottom: 60px;
+}

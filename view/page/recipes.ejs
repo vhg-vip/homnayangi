@@ -1,1 +1,14 @@
 <%- include('../layout/header.ejs') -%>
+
+<link rel="stylesheet" href="../../stylesheets/recipe.css">
+
+<div class="recipes_container container">
+    <div class="head">
+        <p class="category">Tất cả công thức</p>
+        <div class="search">
+            <i class="fas fa-search search_icon"></i>
+            <input type="text" class="search_input">
+        </div>
+    </div>
+    <%- include('../share/post-recipe.ejs') -%>
+</div>

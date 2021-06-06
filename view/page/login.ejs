@@ -1,1 +1,25 @@
 <%- include('../layout/header.ejs') -%>
+
+<link rel="stylesheet" href="../../stylesheets/login.css">
+<div class="container d-flex justify-content-center">
+    <div class="form">
+        <p class="title">ĐĂNG NHẬP</p>
+        <form action="">
+            <div class="form-group">
+                <label for="username">Tên tài khoản :</label>
+                <input class="form-input" type="text" name="username" id="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Mật khẩu :</label>
+                <input class="form-input" type="password" name="password" id="password">
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <a class="link" href="/user/signup">Đăng ký tài khoản</a>
+                <a class="link" href="/user/forgot-password">Quên mật khẩu?</a>
+            </div>
+            <div class="text-center">
+                <button class="btn">Đăng Nhập</button>
+            </div>
+        </form>
+    </div>
+</div>

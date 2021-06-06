@@ -16,8 +16,13 @@ let getIngredients = async (req, res, next) => {
     res.render('page/suggestion.ejs');
 }
 
+let getRecipeSuggestion = async (req, res, next) => {
+    res.render('page/recipe-suggestion.ejs');
+}
+
 module.exports = {
     getRecipes,
     getRecipeById,
-    getIngredients
+    getIngredients,
+    getRecipeSuggestion
 }

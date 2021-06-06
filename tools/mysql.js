@@ -26,7 +26,13 @@ const getRecipes = async () => {
     return rows;
 }
 
+const addNewUser = async ({user_name, user_password, user_email}) => {
+    const sql = "INSERT INTO tbl_user (user_name, user_password, user_email) VALUES (?, ?, ?)";
+    await promisePool.query(sql, [user_name, user_password, user_email]);
+}
+
 module.exports = {
     getUsers: getUsers,
-    getRecipes: getRecipes
+    getRecipes: getRecipes,
+    addNewUser: addNewUser
 }

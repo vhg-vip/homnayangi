@@ -1,6 +1,6 @@
 module.exports = {
-    UserResponseFactor: ( {user_id, user_name, user_password, user_age} ) => {
-        return {user_id, user_name, user_password, user_age}
+    UserLoginFactor: ( { user_name, user_password} ) => {
+        return { user_name, user_password }
     },
 
     UserRequestFactor: ( {user_id} ) => {

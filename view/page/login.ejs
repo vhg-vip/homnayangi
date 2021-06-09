@@ -4,15 +4,18 @@
 <div class="container d-flex justify-content-center">
     <div class="form">
         <p class="title">ĐĂNG NHẬP</p>
-        <form action="">
+        <form action="/user/login" method="POST">
             <div class="form-group">
                 <label for="username">Tên tài khoản :</label>
-                <input class="form-input" type="text" name="username" id="username">
+                <input class="form-input" type="text" name="user_name" id="username">
             </div>
             <div class="form-group">
                 <label for="password">Mật khẩu :</label>
-                <input class="form-input" type="password" name="password" id="password">
+                <input class="form-input" type="password" name="user_password" id="password">
             </div>
+            <% if (error) { %>
+                <p class="my-3" style="color: red;" id="msg"><%= error %> </p>
+            <% } %>
             <div class="d-flex justify-content-between mt-4">
                 <a class="link" href="/user/signup">Đăng ký tài khoản</a>
                 <a class="link" href="/user/forgot-password">Quên mật khẩu?</a>

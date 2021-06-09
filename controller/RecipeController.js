@@ -19,10 +19,14 @@ let getIngredients = async (req, res, next) => {
 let getRecipeSuggestion = async (req, res, next) => {
     res.render('page/recipe-suggestion.ejs');
 }
+let getAddRecipe = async (req, res, next) => {
+    res.render('page/add-recipe.ejs');
+} 
 
 module.exports = {
     getRecipes,
     getRecipeById,
     getIngredients,
-    getRecipeSuggestion
+    getRecipeSuggestion,
+    getAddRecipe
 }

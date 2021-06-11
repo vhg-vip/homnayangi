@@ -20,6 +20,18 @@ const getUsers = async () => {
     return rows;
 }
 
+const getIngredientByIngredientName = async (ingredient_name) => {
+    let sql = "SELECT * FROM tbl_ingredient WHERE ingredient_name=?"
+    const [rows, fields] = await promisePool.query(sql, [ingredient_name]);
+    return rows;
+}
+
+const getIngredients = async () => {
+    let sql = "SELECT * FROM tbl_ingredient"
+    const [rows, fields] = await promisePool.query(sql);
+    return rows;
+}
+
 const getRecipes = async () => {
     let sql = "SELECT * FROM tbl_recipe";
     const [rows, fields] = await promisePool.query(sql);
@@ -74,5 +86,7 @@ module.exports = {
     getUserById: getUserById,
     updatePassword: updatePassword,
     getUsernameAndEmail: getUsernameAndEmail,
-    updateVerifyCode: updateVerifyCode
+    updateVerifyCode: updateVerifyCode,
+    getIngredientByIngredientName: getIngredientByIngredientName,
+    getIngredients: getIngredients
 }

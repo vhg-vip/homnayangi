@@ -1,0 +1,20 @@
+.sidebar{
+    height: 100vh;
+    background-color: #F7F8F6;
+    width: 200px;
+}
+.nav-item{
+    background-color: #E4E4E4;
+    color: #93A28B;
+    font-size: 18px;
+    width: 100%;
+    display: block;
+    text-decoration: none;
+}
+.nav-item:hover{
+    background-color: #93A28B;
+    color: white;
+}
+th{
+    background-color: #93A28B;
+}

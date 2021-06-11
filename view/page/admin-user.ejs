@@ -1,0 +1,40 @@
+<div class="">
+    <div class="d-flex">
+        <div class="" style="width: 200px;">
+            <%- include('./admin-sidebar.ejs') -%>
+        </div>
+        <div class="p-3 w-100">
+            <table class="table table-bordered table-striped " id="userTable">
+                <thead class="thead-dark">
+                <tr>
+                    <th style="background-color: #93A28B; color: white;">#</th>
+                    <th style="background-color: #93A28B; color: white;">Tên đăng nhập</th>
+                    <th style="background-color: #93A28B; color: white;">Mật khẩu</th>
+                    <th style="background-color: #93A28B; color: white;">Email</th>
+                    <th style="background-color: #93A28B; color: white;">Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for( let i = 0; i < users.length; i++ ) { %>
+                    <tr>
+                        <td><%= i %> </td>
+                        <td><%= users[i].user_name %> </td>
+                        <td><%= users[i].user_password %> </td>
+                        <td><%= users[i].user_email %> </td>
+                        <td>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+  
+</div>
+
+<script>
+    $(document).ready( function () {
+        $('#userTable').DataTable();
+    } );
+</script>

@@ -7,6 +7,7 @@ const path = require('path');
 
 const userRoute = require('./routes/user');
 const recipeRoute = require('./routes/recipe');
+const adminRoute = require('./routes/admin');
 
 const app = express();
 let port = 3000;
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use('/user', userRoute);
 app.use('/recipe', recipeRoute);
+app.use('/admin', adminRoute);
 
 // app.get('/', function(req, res) {
 //     res.render('./page/index.ejs');

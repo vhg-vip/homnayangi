@@ -4,7 +4,7 @@ const settings = {
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'homnayangi',
+    database: 'db-homnayangi',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -77,6 +77,30 @@ const updateVerifyCode = async (user_id, verify_code) => {
     await promisePool.query(sql, [verify_code, user_id]);
 }
 
+const getIngredientRecipe = async () => {
+    let sql = "SELECT * FROM tbl_ingredient_recipe";
+    const [rows, fields] = await promisePool.query(sql);
+    return rows;
+}
+
+const getIngredientRecipeByRecipeId = async (recipe_id) => {
+    let sql = "SELECT * FROM tbl_ingredient_recipe WHERE recipe_id = ?";
+    const [rows, fields] = await promisePool.query(sql, [recipe_id]);
+    return rows;
+}
+
+const getAllIngredients = async () => {
+    let sql = "SELECT * FROM tbl_ingredient";
+    const [rows, fields] = await promisePool.query(sql);
+    return rows;
+}
+
+const getIngredientById = async (ingredient_id) => {
+    let sql = "SELECT * FROM tbl_ingredient WHERE ingredient_id = ?";
+    const [rows, fields] = await promisePool.query(sql, [ingredient_id]);
+    return rows;
+}
+
 module.exports = {
     getUsers: getUsers,
     getRecipes: getRecipes,
@@ -87,6 +111,13 @@ module.exports = {
     updatePassword: updatePassword,
     getUsernameAndEmail: getUsernameAndEmail,
     updateVerifyCode: updateVerifyCode,
+
     getIngredientByIngredientName: getIngredientByIngredientName,
     getIngredients: getIngredients
+
+    getIngredientRecipe: getIngredientRecipe,
+    getAllIngredients: getAllIngredients,
+    getIngredientRecipeByRecipeId: getIngredientRecipeByRecipeId,
+    getIngredientById: getIngredientById
+
 }

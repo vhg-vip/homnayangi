@@ -1,0 +1,52 @@
+<div class="">
+    <div class="d-flex">
+        <div class="" style="width: 200px;">
+            <%- include('./admin-sidebar.ejs') -%>
+        </div>
+        <div class="p-3 w-100">
+            <input class="form-control mr-sm-2 w-25" id="searchRecipe" type="search" placeholder="Search" aria-label="Search">
+            <table class="table table-bordered table-striped " id="recipeTable">
+                <thead class="thead-dark">
+                <tr>
+                    <th style="background-color: #93A28B; color: white; width: 5%;">#</th>
+                    <th style="background-color: #93A28B; color: white; width: 20%;">Tên</th>
+                    <th style="background-color: #93A28B; color: white; width: 20%;">Nguyên liệu</th>
+                    <th style="background-color: #93A28B; color: white; width: 35%;">Cách làm</th>
+                    <th style="background-color: #93A28B; color: white; width: 15%;">Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for( let i = 0; i < recipes.length; i++ ) { %>
+                    <tr>
+                        <td><%= i %> </td>
+                        <td><%= recipes[i].recipe_name %> </td>
+                        <td>
+                            <% for( let item of recipes[i].recipe_ingredient ) { %>
+                                <p><%= item %> </p>
+                            <% } %>
+                        </td>
+                        <td><p><%= recipes[i].recipe_tutorior %> </p></td>
+                        <td class="text-center">
+                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-warning">Edit</button>
+                        </td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+  
+</div>
+
+<script>
+    $(document).ready( function () {
+        var table = $('#recipeTable').DataTable({dom: 'p'});
+        $('#searchRecipe').on( 'keyup', function () {
+            table
+                .columns( 1 )
+                .search( this.value )
+                .draw();
+        } );
+    } );
+</script>

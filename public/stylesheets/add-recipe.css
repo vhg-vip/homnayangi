@@ -1,0 +1,55 @@
+.suggestion_container *{
+    font-size: 24px;
+}
+.cart_list{
+    margin-top: 60px;
+}
+.cart_item{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-bottom: solid 1px #7F7E7E;
+}
+.remove{
+    cursor: pointer;
+}
+.title{
+    color: #93A28B;
+    margin-bottom: 60px;
+}
+.search{
+    position: relative;
+}
+.search_input{
+    border: none;
+    border-bottom: solid 1px #7F7E7E;
+    padding-left: 30px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.search_input:focus{
+    outline: none;
+    border-bottom: solid 1px #7F7E7E;
+}
+.search_icon{
+    position: absolute;
+    top: 26%;
+    left: 0%;
+}
+.ingredient_list{
+    margin-top: 22px;
+    padding: 24px 18px;
+    border: solid 1px #8E8E8E;
+}
+.ingredient_list li{
+    list-style: none;
+    padding: 10px;
+    color: #3F3F3F;
+    border-bottom: solid 1px #8E8E8E;
+}
+.submit_btn{
+    background-color: #5F7636;
+    border-radius: 100px;
+    color: white;
+    padding: 15px 50px;
+}

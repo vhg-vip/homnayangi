@@ -1,0 +1,38 @@
+<%- include('../layout/header.ejs') -%>
+
+<link rel="stylesheet" href="../../stylesheets/add-recipe.css">
+<div class="container ">
+    <div class="row">
+        <p class="col-md-8 px-5">Nguyên liệu</p>
+
+        <form class="search col-md-4" action="/recipe/add/search", method="GET">
+            <button class="btn"><i class="fas fa-search search_icon"></i></button>
+            <input type="text" name="q" <%# value= %>   class="search_input">
+            <ul id="listIngredients" class="ingredient_list">
+                <%
+                for (let index = 0; index < ingredients.length; index++) { %> 
+                    <li><%= ingredients[index].ingredient_name %></li>
+                <%}
+                %>
+            </ul>
+        </form>
+    </div>
+    
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>So luong</th>
+            <th>Don vi</th>
+        </tr>
+        <tr>
+            <th>Thit bo</th>
+            <th>100</th>
+            <th>gam</th>
+        </tr>
+    </table>
+    <p > Cách làm</p>
+    <textarea name="cachlam" id="" class="col-md-12"  rows="20"></textarea>
+    <div class="text-center">
+        <button type="button" class="btn submit_btn">Xác nhận</button>
+    </div>
+</div>

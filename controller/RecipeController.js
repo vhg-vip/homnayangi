@@ -19,10 +19,33 @@ let getIngredients = async (req, res, next) => {
 let getRecipeSuggestion = async (req, res, next) => {
     res.render('page/recipe-suggestion.ejs');
 }
+let getAddRecipe = async (req, res, next) => {
+
+    res.render('page/add-recipe.ejs',  {
+        ingredients : [],
+        query : ""
+    }
+    );
+
+} 
+
+let getSearchIngredient = async (req, res, next) => {
+    let q = req.query.q;
+    let ingredients = await mysql.getIngredients();
+    let matchedIngredient = ingredients.filter(function(ingredient){
+        return ingredient.ingredient_name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
+    });
+    res.render('page/add-recipe.ejs', {
+        ingredients : matchedIngredient,
+        query : q
+    });
+} 
 
 module.exports = {
     getRecipes,
     getRecipeById,
     getIngredients,
-    getRecipeSuggestion
+    getRecipeSuggestion,
+    getAddRecipe,
+    getSearchIngredient
 }

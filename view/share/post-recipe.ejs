@@ -4,11 +4,14 @@
 <div class="post_container">
     <div class="info">
         <img src="../../assets/user.svg" alt="">
-        <p class="username">Admin</p>
-        <p class="time">May 15, 2021</p>
+        <p class="username"><%= recipe.user_name %> </p>
+        <p class="time"><%= recipe.recipe_time %> </p>
     </div>
-    <p class="recipe-name">Công thức làm bánh Hamburger</p>
-    <img class="recipe-img" src="../../assets/burger.svg" alt="" width="100%">
+    <a href="/recipe/<%= recipe.recipe_id %> ">
+        <p class="recipe-name"><%= recipe.recipe_name %> </p>
+    </a>
+    
+    <img class="recipe-img" src="<%= recipe.recipe_image %> " alt="" width="100%">
     <div class="rating">
         <div class="rate">
             <i class="fas fa-star fill-star"></i>

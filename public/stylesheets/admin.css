@@ -1,7 +1,14 @@
 .sidebar{
-    height: 100vh;
+    min-height: 100vh;
     background-color: #F7F8F6;
     width: 200px;
+    position: fixed;
+}
+.nav-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 90vh;
 }
 .nav-item{
     background-color: #E4E4E4;
@@ -12,6 +19,10 @@
     text-decoration: none;
 }
 .nav-item:hover{
+    background-color: #93A28B;
+    color: white;
+}
+.active{
     background-color: #93A28B;
     color: white;
 }

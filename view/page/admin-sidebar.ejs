@@ -21,6 +21,8 @@
 
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
   <link rel="stylesheet" href="../../stylesheets/admin.css">
+
+  
 </head>
 <body>
     <div class="sidebar">
@@ -28,10 +30,27 @@
         <img src="../../assets/logo-admin.svg" alt="">
       </div>
       <div class="nav-list">
-        <a href="/admin/user" class="nav-item p-3">Người dùng</a>
-        <a href="/admin/recipe" class="nav-item p-3">Công thức</a>
-        <a href="/admin/ingredient" class="nav-item p-3">Nguyên liệu</a>
+        <div>
+          <a href="/admin/user" class="nav-item p-3" id="user">Người dùng</a>
+          <a href="/admin/recipe" class="nav-item p-3" id="recipe">Công thức</a>
+          <a href="/admin/ingredient" class="nav-item p-3" id="ingredient">Nguyên liệu</a>
+        </div>
+        
+        <a href="/user/login" class="nav-item p-3" id="ingredient">Đăng xuất</a>
       </div>
     </div>
 </body>
 </html>
+<script>
+  console.log(location.pathname);
+  let url = location.pathname;
+  if(url === '/admin/ingredient'){
+    $('#ingredient').addClass('active')
+  }
+  else if(url === '/admin/user'){
+    $('#user').addClass('active');
+  }
+  else{
+    $('#recipe').addClass('active');
+  }
+</script>

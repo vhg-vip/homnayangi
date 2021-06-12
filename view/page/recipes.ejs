@@ -7,10 +7,37 @@
         <p class="category">Tất cả công thức</p>
         <div class="search">
             <i class="fas fa-search search_icon"></i>
-            <input type="text" class="search_input">
+            <input type="text" class="search_input" id="searchRecipe" onkeyup="searchRecipe()">
         </div>
     </div>
 
-    <%- include('../share/post-recipe.ejs') -%>
+    <ul class="recipe-list" id="recipe-list">
+        <% for( let item of recipes ) { %>
+            <li class="recipe-item">
+                <div>
+                    <%- include('../share/post-recipe.ejs', { recipe: item }) -%>
+                </div>
+            </li>
+        <% } %>
+        </ul>
     
 </div>
+
+<script>
+    function searchRecipe() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("searchRecipe");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("recipe-list");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("div")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+</script>

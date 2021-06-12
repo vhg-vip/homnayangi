@@ -65,3 +65,8 @@ p{
 ul{
     margin-left: 15px;
 }
+pre{
+    white-space: break-spaces;
+    font-family: 'Roboto', sans-serif;
+    line-height: 21px;
+}

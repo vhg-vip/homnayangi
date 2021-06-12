@@ -27,7 +27,9 @@ let postLogin = async (req, res, next) => {
         // console.log(result[0].user_id);
         if(result[0]){
             res.cookie('userId', result[0].user_id);
-            res.redirect('/recipe');
+            // console.log(result[0]);
+            if(result[0].isAdmin === 0) res.redirect('/recipe');
+            else res.redirect('/admin/user');
         }
         else{
             res.render('page/login.ejs', { 

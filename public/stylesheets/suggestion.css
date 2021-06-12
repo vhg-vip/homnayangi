@@ -52,4 +52,8 @@
     border-radius: 100px;
     color: white;
     padding: 15px 50px;
+    margin-top: 50px;
+}
+p{
+    margin: 0;
 }

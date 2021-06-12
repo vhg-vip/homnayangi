@@ -101,6 +101,27 @@ const getIngredientById = async (ingredient_id) => {
     return rows;
 }
 
+const deleteRecipe = async (recipe_id) => {
+    let sql = "DELETE FROM tbl_recipe WHERE recipe_id = ?";
+    await promisePool.query(sql, [recipe_id]);
+}
+
+const deleteIngredient = async (ingredient_id) => {
+    let sql = "DELETE FROM tbl_ingredient WHERE ingredient_id = ?";
+    await promisePool.query(sql, [ingredient_id]);
+}
+
+const updateIngredient = async ({ingredient_id, ingredient_name, ingredient_measure}) => {
+    let sql = "UPDATE tbl_ingredient SET ingredient_name = ?, ingredient_measure = ? WHERE ingredient_id = ?";
+    await promisePool.query(sql, [ingredient_name, ingredient_measure, ingredient_id]);
+}
+
+const getRcipeById = async (recipe_id) => {
+    let sql = "SELECT * FROM tbl_recipe WHERE recipe_id = ?";
+    const [rows, fields] = await promisePool.query(sql, [recipe_id]);
+    return rows;
+}
+
 module.exports = {
     getUsers: getUsers,
     getRecipes: getRecipes,
@@ -111,13 +132,14 @@ module.exports = {
     updatePassword: updatePassword,
     getUsernameAndEmail: getUsernameAndEmail,
     updateVerifyCode: updateVerifyCode,
-
     getIngredientByIngredientName: getIngredientByIngredientName,
-    getIngredients: getIngredients
-
+    getIngredients: getIngredients,
     getIngredientRecipe: getIngredientRecipe,
     getAllIngredients: getAllIngredients,
     getIngredientRecipeByRecipeId: getIngredientRecipeByRecipeId,
-    getIngredientById: getIngredientById
-
+    getIngredientById: getIngredientById,
+    deleteRecipe: deleteRecipe,
+    deleteIngredient: deleteIngredient,
+    updateIngredient: updateIngredient,
+    getRcipeById: getRcipeById
 }

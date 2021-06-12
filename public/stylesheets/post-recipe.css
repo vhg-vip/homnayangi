@@ -1,6 +1,7 @@
 .post_container{
     border: solid 1px #e2e2e2;
     padding: 60px;
+    margin-bottom: 30px;
 }
 .info{
     display: flex;

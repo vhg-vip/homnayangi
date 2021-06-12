@@ -9,11 +9,9 @@
             <button class="btn"><i class="fas fa-search search_icon"></i></button>
             <input type="text" name="q" <%# value= %>   class="search_input">
             <ul id="listIngredients" class="ingredient_list">
-                <%
-                for (let index = 0; index < ingredients.length; index++) { %> 
+                <% for (let index = 0; index < ingredients.length; index++) { %> 
                     <li><%= ingredients[index].ingredient_name %></li>
-                <%}
-                %>
+                <% } %>
             </ul>
         </form>
     </div>

@@ -1,15 +1,32 @@
 <script>
-    function deleteRecipe(id) {
+    function deleteIngredient(id) {
         console.log(id) 
         $.ajax({    
             type: "POST",
-            url: "/admin/delete-recipe", 
-            data:{ recipe_id: id },            
+            url: "/admin/delete-ingredient", 
+            data:{ ingredient_id: id },            
             success: function(data){   
                 console.log(data);
                 location.reload();
             }
         });
+        location.reload();
+    }
+
+    function editIngredient(id) {
+        console.log(id) 
+        let name = $(`#name${id}`).val();
+        let measure = $(`#measure${id}`).val();
+        $.ajax({    
+            type: "POST",
+            url: "/admin/update-ingredient", 
+            data:{ ingredient_id: id, ingredient_name: name, ingredient_measure: measure },            
+            success: function(data){ 
+                console.log(data);
+                location.reload();
+            }
+        });
+        location.reload();
     }
 
 </script>
@@ -25,26 +42,20 @@
                 <tr>
                     <th style="background-color: #93A28B; color: white; width: 5%;">#</th>
                     <th style="background-color: #93A28B; color: white; width: 20%;">Tên</th>
-                    <th style="background-color: #93A28B; color: white; width: 20%;">Nguyên liệu</th>
-                    <th style="background-color: #93A28B; color: white; width: 35%;">Cách làm</th>
+                    <th style="background-color: #93A28B; color: white; width: 20%;">Đơn vị</th>
                     <th style="background-color: #93A28B; color: white; width: 15%;">Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
-                <% for( let i = 0; i < recipes.length; i++ ) { %>
+                <% for( let i = 0; i < ingredients.length; i++ ) { %>
                     <tr>
                         <td><%= i %> </td>
-                        <td><%= recipes[i].recipe_name %> </td>
-                        <td>
-                            <% for( let item of recipes[i].recipe_ingredient ) { %>
-                                <p><%= item %> </p>
-                            <% } %>
-                        </td>
-                        <td><p><%= recipes[i].recipe_tutorior %> </p></td>
+                        <td><%= ingredients[i].ingredient_name %> </td>
+                        <td><p><%= ingredients[i].ingredient_measure %> </p></td>
                         <td class="text-center">
-                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteRecipeModal<%= recipes[i].recipe_id %>">Delete</button>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteIngredientModal<%= ingredients[i].ingredient_id %>">Delete</button>
                               <!-- Delete Modal -->
-                            <div class="modal fade" id="deleteRecipeModal<%= recipes[i].recipe_id %>" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal fade" id="deleteIngredientModal<%= ingredients[i].ingredient_id %>" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                   <div class="modal-content">
                                     <div class="modal-header">
@@ -56,42 +67,33 @@
                                         <h3 class="my-4">Bạn có chắc muốn xóa không?</h3>
                                     </div>
                                     <div class="modal-footer">
-                                      <button type="button" class="btn btn-primary" onclick="deleteRecipe( <%= recipes[i].recipe_id %> )">Yes</button>
+                                      <button type="button" class="btn btn-primary" onclick="deleteIngredient(<%= ingredients[i].ingredient_id %> )">Yes</button>
                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                                     </div>
                                   </div>
                                 </div>
                             </div>
 
-                            <button class="btn btn-warning" data-toggle="modal" data-target="#editRecipeModal<%= recipes[i].recipe_id %>">Edit</button>
+                            <button class="btn btn-warning" data-toggle="modal" data-target="#editIngredientModal<%= ingredients[i].ingredient_id %>">Edit</button>
                             <!-- Edit Modal -->
-                            <div class="modal fade" id="editRecipeModal<%= recipes[i].recipe_id %>" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal fade" id="editIngredientModal<%= ingredients[i].ingredient_id %>" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
                                   <div class="modal-content">
-                                    <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
+                                    <div class="modal-header"></div>
                                     <div class="modal-body ">
                                         <form class="text-start">
                                             <div class="form-group mb-3">
                                               <label class="mb-2">Tên</label>
-                                              <input type="text" class="form-control" value="<%= recipes[i].recipe_name %>">
+                                              <input type="text" class="form-control" id="name<%= ingredients[i].ingredient_id %>" value="<%= ingredients[i].ingredient_name %>">
                                             </div>
                                             <div class="form-group mb-3">
-                                              <label class="mb-2">Nguyên liệu</label>
-                                              <textarea class="form-control" rows="10"><% for( let item of recipes[i].recipe_ingredient ) { %> <%= item %> 
-<% } %></textarea>
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                <label class="mb-2">Cách làm</label>
-                                                <textarea class="form-control" rows="10" ><%= recipes[i].recipe_tutorior %></textarea>
-                                            </div>
+                                                <label class="mb-2">Đơn vị</label>
+                                                <input type="text" class="form-control" id="measure<%= ingredients[i].ingredient_id %>" value="<%= ingredients[i].ingredient_measure %>">
+                                              </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                      <button type="button" class="btn btn-primary" onclick="editRecipe( <%= recipes[i].recipe_id %> )">Update</button>
+                                      <button type="button" class="btn btn-primary" onclick="editIngredient(<%= ingredients[i].ingredient_id %>)">Update</button>
                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                                     </div>
                                   </div>

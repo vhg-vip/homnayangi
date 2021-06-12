@@ -7,6 +7,12 @@ const renderAdminUser = async (req, res,next) => {
     res.render('page/admin-user.ejs', { users: result });
 }
 
+const renderAdminIngredient = async (req, res, next) => {
+    let result = await mysql.getAllIngredients();
+    // console.log(result);
+    res.render('page/admin-ingredient.ejs', { ingredients: result });
+}
+
 const renderAdminRecipe = async (req, res, next) => {
     let recipes = await mysql.getRecipes();
     let data = [];
@@ -37,7 +43,24 @@ const renderAdminRecipe = async (req, res, next) => {
     res.render('page/admin-recipe.ejs', {recipes: data});
 }
 
+const deleteRecipe = async (req, res, next) => {
+    await mysql.deleteRecipe(req.body.recipe_id)
+}
+
+const deleteIngredient = async (req, res, next) => {
+    await mysql.deleteIngredient(req.body.ingredient_id);
+}
+
+const updateIngredient = async (req, res, next) => {
+    let data = adminmodel.UpdateIngredientRequest(req.body);
+    await mysql.updateIngredient(data);
+}
+
 module.exports = {
     renderAdminUser,
-    renderAdminRecipe
+    renderAdminRecipe,
+    renderAdminIngredient,
+    deleteRecipe,
+    deleteIngredient,
+    updateIngredient
 }

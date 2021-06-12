@@ -13,6 +13,17 @@ const settings = {
 const pool = mysql.createPool(settings);
 
 const promisePool = pool.promise();
+const getRecipeByIngredient = async(ingredientList) =>{
+    let result = new Set();
+    for(let ingredient of ingredientList){
+        let sql= "SELECT recipe_id FROM tbl_ingredient_recipe WHERE ingredient_id=?";
+        const [rows, fields]= await promisePool.query(sql, [ingredient])
+        for(let id of rows){
+                result.add(id.recipe_id);
+        }
+    }
+    return result;
+}
 
 const getUsers = async () => {
     let sql = "SELECT * FROM  tbl_user";
@@ -141,5 +152,6 @@ module.exports = {
     deleteRecipe: deleteRecipe,
     deleteIngredient: deleteIngredient,
     updateIngredient: updateIngredient,
-    getRcipeById: getRcipeById
+    getRcipeById: getRcipeById,
+    getRecipeByIngredient
 }

@@ -24,7 +24,9 @@
             </div>
             <ul class="ingredient_list" id="ingredient-list">
                 <% for( let item of ingredients) { %>
-                    <li><p><%= item.ingredient_name %> </p></li>
+                    <li onclick="addIngredient(<%= item['ingredient_id'] %>,  '<%= item['ingredient_name'] + '' %>')" >
+                        <p><%= item.ingredient_name %></p>
+                    </li>
                 <% } %>
                 
             </ul>
@@ -37,6 +39,7 @@
 
 <script>
     document.getElementById("ingredient-list").style.display = "none";
+    var cart = [];
     function searchIngredient() {
         var input, filter, ul, li, a, i, txtValue;
         input = document.getElementById("search-input");
@@ -58,5 +61,20 @@
                 li[i].style.display = "none";
             }
         }
+    }
+
+    function addIngredient(id, name){
+        if(cart.indexOf(id) === -1){
+            cart.push(id);
+            $('.cart_list').append(`<div class="cart_item cart_item${id}"> <span>${name}</span> <span class="remove remove${id}" onclick="deteleIngredient(${id})"><i class="fas fa-times"></i></span> </div>`);
+        }
+        console.log(cart);
+    }
+
+    function deteleIngredient(id){
+        let index = cart.indexOf(id)
+        cart = cart.filter(item => item !== id);
+        console.log(cart);
+        $(`.cart_item${id}`).remove();
     }
 </script>

@@ -19,7 +19,7 @@ const getRecipeByIngredient = async(ingredientList) =>{
         let sql= "SELECT recipe_id FROM tbl_ingredient_recipe WHERE ingredient_id=?";
         const [rows, fields]= await promisePool.query(sql, [ingredient])
         for(let id of rows){
-                result.add(id.recipe_id);
+            result.add(id.recipe_id);
         }
     }
     return result;

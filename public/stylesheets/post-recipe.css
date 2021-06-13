@@ -31,6 +31,7 @@ p{
 }
 .rate, .like{
     display: flex;
+    align-items: center;
 }
 .fill-star{
     color: #EBB800;
@@ -48,5 +49,8 @@ p{
 .unlike{
     color: #C4C4C4;
     font-size: 20px;
+    cursor: pointer;
+}
+.star{
     cursor: pointer;
 }

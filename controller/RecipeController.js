@@ -2,6 +2,9 @@ const mysql = require('../tools/mysql');
 const recipemodel = require('../model/RecipeModel');
 const express = require('express');
 
+var LocalStorage = require('node-localstorage').LocalStorage,
+    localStorage = new LocalStorage('./scratch');
+
 let suggestionList = [];
 
 let getRecipes = async (req, res, next) => {
@@ -14,6 +17,7 @@ let getRecipes = async (req, res, next) => {
             recipe_name: '',
             recipe_image: '',
             recipe_tutorior: '',
+            recipe_rating: 0,
             user_name: '',
             favorite_user: 0,
             is_favorite: false,
@@ -44,6 +48,7 @@ let getRecipes = async (req, res, next) => {
             obj.recipe_name = recipe.recipe_name;
             obj.recipe_image = recipe.recipe_image;
             obj.recipe_tutorior = recipe.recipe_tutorior;
+            obj.recipe_rating = Number(recipe.rating_point/recipe.rating_count).toFixed(1);
             obj.recipe_time = recipe.recipe_time.toString().slice(4, 15);
             obj.user_name = user[0].user_name;
             obj.favorite_user = id;
@@ -69,6 +74,7 @@ let getRecipeById = async (req, res, next) => {
         recipe_name: '',
         recipe_image: '',
         recipe_tutorior: '',
+        recipe_rating: 0,
         user_name: '',
         favorite_user: 0,
         recipe_time: '',
@@ -95,6 +101,7 @@ let getRecipeById = async (req, res, next) => {
     obj.recipe_name = recipe.recipe_name;
     obj.recipe_image = recipe.recipe_image;
     obj.recipe_tutorior = recipe.recipe_tutorior;
+    obj.recipe_rating = Number(recipe.rating_point/recipe.rating_count).toFixed(1);
     obj.recipe_time = recipe.recipe_time.toString().slice(4, 15);
     obj.user_name = user[0].user_name;
     obj.favorite_user = id;
@@ -196,8 +203,8 @@ const getRecipeByIngredient = async (req, res, next) => {
 
 }
 const voteStar= async (req, res, next) => {
-    const {user_id, recipe_id, points} = req.body;
-    //console.log(user_id, recipe_id, points)
+    let user_id = req.cookies.userId;
+    const {recipe_id, points} = req.body;
     const {status, message, avaragePoints} = await mysql.voteStar(user_id, recipe_id, points);
 
     if (status === 200) await res.status(status).send({avaragePoints});

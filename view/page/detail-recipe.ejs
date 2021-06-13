@@ -25,11 +25,18 @@
 
         <div class="rating">
             <div class="rate">
-                <i class="fas fa-star fill-star"></i>
-                <i class="fas fa-star fill-star"></i>
-                <i class="fas fa-star fill-star"></i>
-                <i class="fas fa-star fill-star"></i>
-                <i class="fas fa-star empty-star"></i>
+                <% for( let i = 1; i <= 5; i++ ) { %>
+                    <span class="star unvoted-star<%= i %><%= recipe.recipe_id %> " onclick="voteStar(<%= i %>, <%= recipe.recipe_id %>)">
+                        <i class="fas fa-star empty-star"></i>
+                    </span>
+                    <span class="star voted-star voted-star<%= i %><%= recipe.recipe_id %> ">
+                        <i class="fas fa-star fill-star"></i>
+                    </span>
+                    <span class="star disable-star disable-star<%= i %><%= recipe.recipe_id %> ">
+                        <i class="fas fa-star empty-star"></i>
+                    </span>
+                <% } %>
+                <p><%= recipe.recipe_rating %> </p>
             </div>
             <div class="like">
                 <% if (recipe.is_favorite) { %>

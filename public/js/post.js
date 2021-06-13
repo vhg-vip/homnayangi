@@ -29,3 +29,27 @@ function addFavoriteRecipe(recipeId, userId){
     });
     // location.reload();
 }
+
+$('.voted-star').hide();
+$('.disable-star').hide();
+
+function voteStar(point, recipeId){
+    console.log(point, recipeId);
+    for(let i=1; i<=point; i++){
+        $(`.voted-star${i}${recipeId}`).show();
+        $(`.unvoted-star${i}${recipeId}`).hide();
+    }
+    for(let i = point+1; i<=5; i++){
+        $(`.disable-star${i}${recipeId}`).show();
+        $(`.unvoted-star${i}${recipeId}`).hide();
+    }
+    $.ajax({    
+        type: "POST",
+        url: "/recipe/voteStar", 
+        data:{ recipe_id: recipeId, points: point },            
+        success: function(data){   
+            console.log(data);
+            // location.reload();
+        }
+    });
+}

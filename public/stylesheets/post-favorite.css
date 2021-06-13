@@ -41,6 +41,7 @@ p{
 }
 .rate, .like{
     display: flex;
+    align-items: center;
 }
 .fill-star{
     color: #EBB800;

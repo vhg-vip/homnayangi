@@ -220,7 +220,7 @@ module.exports = {
     getFavoriteRecipe: getFavoriteRecipe,
     deleteFavoriteRecipe: deleteFavoriteRecipe,
     addFavoriteRecipe: addFavoriteRecipe,
-    voteStar,
+    voteStar: voteStar,
     checkFavoriteRecipe: checkFavoriteRecipe,
     updateRecipe: updateRecipe
 

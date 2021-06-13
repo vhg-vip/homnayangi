@@ -8,5 +8,9 @@
             <p class="mx-3 my-0">Giỏ nguyên liệu</p>
         </div>
     </div>
-    <%- include('../share/post-favorite.ejs') -%>
+    <% for( let item of recipes ) { %>
+        <div>
+            <%- include('../share/post-favorite.ejs', {recipe: item}) -%>
+        </div>
+    <% } %>
 </div>

@@ -37,3 +37,15 @@ document.getElementById("ingredient-list").style.display = "none";
         console.log(cart);
         $(`.cart_item${id}`).remove();
     }
+
+    function suggestion(){
+        $.ajax({    
+            type: "POST",
+            url: "/recipe/suggestion", 
+            data:{ ingredientList: cart },            
+            success: function(data){   
+                console.log(data);
+                location.replace('/recipe/suggestion');
+            }
+        });
+    }

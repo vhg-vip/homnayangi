@@ -64,8 +64,14 @@ const comfirmRecipe = async (req, res, next) => {
 
 const addIngredient = async (req, res, next) => {
     let data = await adminmodel.InsertIngredientRequest(req.body);
-    console.log(data);
+    // console.log(data);
     await mysql.addIngredient(data);
+}
+
+const updateRecipe = async (req, res, next) => {
+    let data = await adminmodel.UpdateRecipeRequest(req.body);
+    // console.log(data);
+    await mysql.updateRecipe(data);
 }
 
 module.exports = {
@@ -76,5 +82,6 @@ module.exports = {
     deleteIngredient,
     updateIngredient, 
     comfirmRecipe,
-    addIngredient
+    addIngredient,
+    updateRecipe
 }

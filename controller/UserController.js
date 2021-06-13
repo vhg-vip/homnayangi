@@ -134,6 +134,14 @@ let deleteFavoriteRecipe = async (req, res, next) => {
 
 let addFavoriteRecipe = async (req, res, next) => {
     console.log(req.body);
+    let check = await mysql.checkFavoriteRecipe(req.body.user_id, req.body.recipe_id);
+    if(!check){
+        await mysql.addFavoriteRecipe(req.body.user_id, req.body.recipe_id);
+        console.log("ok");
+    }
+    else{
+        console.log("is exist");
+    }
 }
 
 let getProfile = async (req, res, next) => {

@@ -1,31 +1,34 @@
 <%- include('../layout/header.ejs') -%>
 
 <link rel="stylesheet" href="../../stylesheets/add-recipe.css">
-<div class="container ">
+<div class="suggestion_container container">
     <div class="row">
-        <p class="col-md-8 px-5">Nguyên liệu</p>
-
-        <form class="search col-md-4" action="/recipe/add/search", method="GET">
-            <button class="btn"><i class="fas fa-search search_icon"></i></button>
-            <input type="text" name="q" <%# value= %>   class="search_input">
-            <ul id="listIngredients" class="ingredient_list">
-                <% for (let index = 0; index < ingredients.length; index++) { %> 
-                    <li><%= ingredients[index].ingredient_name %></li>
+        <div class="col-md-8 px-5" id="ingre">
+        </div>
+        <div class="col-md-4">
+            <p class="title">Tìm kiếm nguyên liệu</p>
+            <div class="search">
+                <i class="fas fa-search search_icon"></i>
+                <input type="text" class="search_input" id="search-input" onkeyup="searchIngredient()">
+            </div>
+            <ul class="ingredient_list" id="ingredient-list">
+                <% for( let item of ingredients) { %>
+                    <li onclick="preAddIngredient(<%= item['ingredient_id'] %>,'<%= item['ingredient_name'] + '' %>','<%= item['ingredient_measure'] + '' %>')" >
+                        <p><%= item.ingredient_name %></p>
+                    </li>
                 <% } %>
+                
             </ul>
-        </form>
+        </div>
     </div>
-    
-    <table class="table">
-        <tr>
-            <th>Name</th>
-            <th>So luong</th>
-            <th>Don vi</th>
-        </tr>
-        <tr>
-            <th>Thit bo</th>
-            <th>100</th>
-            <th>gam</th>
+</div>
+<form class="container" action="/recipe/add" method="POST">
+    <table class="table" id="table" name="list_incredient">
+        <tr class="text-center">
+            <th>Tên</th>
+            <th>Số lượng</th>
+            <th>Đơn vị</th>
+            <th>Hủy</th>
         </tr>
     </table>
     <p > Cách làm</p>
@@ -33,4 +36,84 @@
     <div class="text-center">
         <button type="button" class="btn submit_btn">Xác nhận</button>
     </div>
-</div>
+</form>
+
+<script>
+    document.getElementById("ingredient-list").style.display = "none";
+    var ingre = document.getElementById("ingre");
+    let list = [];
+
+    function preAddIngredient(id,name,measure){
+        ingre.innerHTML = 
+            `<div class="pre_add"> 
+                <span>Tên</span> <span id="name">${name}</span> 
+            </div>
+            <div class="pre_add">
+                <p>Số lượng</p>
+                <input type="text" id="inputNumber" class="input_number" >
+            </div>
+            <div class="pre_add"> 
+                <span>Đơn vị</span> <span id="measure">${measure}</span> 
+            </div>
+            <div class="text-center">
+                <button onclick="addIngredient( ${id},'${name}','${measure}')" type="button" class="btn submit_btn" id="cc">Thêm</button>
+            </div>
+            `;
+        console.log(typeof(name));
+    }
+
+    function searchIngredient() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("search-input");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("ingredient-list");
+        li = ul.getElementsByTagName("li");
+        if(filter === ''){
+            ul.style.display = "none";
+        }
+        else {
+            ul.style.display = "";
+        }
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("p")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+    function addIngredient(id,name,measure){
+        let ingredient = {
+            id : id,
+            name : name,
+            number : 0,
+            measure : measure
+        };
+        ingredient.number = parseInt(document.getElementById("inputNumber").value);
+        console.log(ingredient);
+        list.push(ingredient);
+        let table = document.getElementById("table");
+            $('.table').append(` 
+                <tr class="list_item${ingredient.id}">
+                    <th class="text-center">
+                        ${ingredient.name}
+                    </th>
+                    <th class="text-center">
+                        ${ingredient.number}
+                    </th>
+                    <th class="text-center">
+                        ${ingredient.measure}
+                    </th>
+                    <th class="remove remove${id} text-center" onclick="deteleIngredient(${ingredient.id})">
+                        <i class="fas fa-times">
+                    </th>
+                </tr>
+            `)
+    }
+    function deteleIngredient(id){
+        list = list.filter(item => item.id !== id);
+        $(`.list_item${id}`).remove();
+    }
+</script>

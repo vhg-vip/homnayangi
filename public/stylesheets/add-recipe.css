@@ -52,4 +52,24 @@
     border-radius: 100px;
     color: white;
     padding: 15px 50px;
+    margin-top: 50px;
+}
+p{
+    margin: 0;
+}
+li{
+    cursor: pointer;
+}
+.pre_add{
+    display: flex;
+    justify-content: space-between;
+}
+.input_number{
+    padding: 0;
+    border: none;
+    border-bottom: solid 1px #7F7E7E;
+}
+.input_number:focus{
+    outline: none;
+    border-bottom: solid 1px #7F7E7E;
 }

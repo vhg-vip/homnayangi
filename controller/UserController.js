@@ -79,7 +79,61 @@ let addNewUser = async(req, res, next) => {
 }
 
 let getFavoriteRecipe = async (req, res, next) => {
-    res.render('page/favorite.ejs');
+    let id = req.cookies.userId;
+    let result = await mysql.getFavoriteRecipe(id);
+    let data = [];
+    for(let i of result){
+        let recipes = await mysql.getRcipeById(i.recipe_id);
+        for(let recipe of recipes){
+            let obj = {
+                recipe_id: 0,
+                recipe_name: '',
+                recipe_image: '',
+                recipe_tutorior: '',
+                user_name: '',
+                favorite_user: 0,
+                recipe_time: '',
+                recipe_ingredient: []
+            }
+            // console.log(recipe);
+            if(recipe.recipe_comfirm === 1){
+                let ingredientRecipes = await mysql.getIngredientRecipeByRecipeId(recipe.recipe_id);
+                // console.log(ingredientRecipes);
+                let spice = 'Gia vị: ';
+                for(let item of ingredientRecipes){
+                    let ingredients = await mysql.getIngredientById(item.ingredient_id);
+                    if(item.ir_amount === 0){
+                        spice += ingredients[0].ingredient_name + ", ";
+                    }
+                    else{
+                        let ingredient = ingredients[0].ingredient_name + ": " + item.ir_amount + " " + ingredients[0].ingredient_measure;
+                        obj.recipe_ingredient.push(ingredient);
+                    }
+                }
+                obj.recipe_ingredient.push(spice.slice(0, spice.length -2));
+                // console.log(obj.recipe_ingredient);
+                let user = await mysql.getUserById(recipe.user_id);
+                obj.recipe_id = recipe.recipe_id;
+                obj.recipe_name = recipe.recipe_name;
+                obj.recipe_image = recipe.recipe_image;
+                obj.recipe_tutorior = recipe.recipe_tutorior;
+                obj.recipe_time = recipe.recipe_time.toString().slice(4, 15);
+                obj.user_name = user[0].user_name;
+                obj.favorite_user = id;
+                data.push(obj);
+            }
+        }
+    }
+    // console.log(data);
+    res.render('page/favorite.ejs', { recipes: data });
+}
+
+let deleteFavoriteRecipe = async (req, res, next) => {
+    await mysql.deleteFavoriteRecipe(req.body.user_id, req.body.recipe_id);
+}
+
+let addFavoriteRecipe = async (req, res, next) => {
+    console.log(req.body);
 }
 
 let getProfile = async (req, res, next) => {
@@ -225,8 +279,6 @@ let renderChangeForgotPassword = async (req, res, next) => {
     });
 }
 
-
-
 module.exports = {
     getUsers,
     getUserLogin,
@@ -240,5 +292,7 @@ module.exports = {
     postLogin,
     postChangePassword,
     postForgotPassword,
-    getVerifyCode
+    getVerifyCode,
+    deleteFavoriteRecipe,
+    addFavoriteRecipe
 }

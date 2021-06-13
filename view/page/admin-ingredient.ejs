@@ -29,14 +29,59 @@
         location.reload();
     }
 
+    function addIngredient() {
+        let name = $(`#ingredient_name`).val();
+        let measure = $(`#ingredient_measure`).val();
+        $.ajax({    
+            type: "POST",
+            url: "/admin/add-ingredient", 
+            data:{ ingredient_name: name, ingredient_measure: measure },            
+            success: function(data){ 
+                console.log(data);
+                location.reload();
+            }
+        });
+        location.reload();
+    }
+
 </script>
+
 <div class="">
     <div class="d-flex">
         <div class="" style="width: 200px;">
             <%- include('./admin-sidebar.ejs') -%>
         </div>
         <div class="p-3 w-100 mx-4">
-            <input class="form-control mr-sm-2 w-25" id="searchRecipe" type="search" placeholder="Search" aria-label="Search">
+            <div class="d-flex justify-content-between my-3">
+                <input class="form-control mr-sm-2 w-25" id="searchRecipe" type="search" placeholder="Search" aria-label="Search">
+                <button type="button" class="btn text-white" style="background-color: #93A28B;"  data-toggle="modal" data-target="#addIngredientModal">Thêm nguyên liệu</button>
+
+                <div class="modal fade" id="addIngredientModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header"></div>
+                        <div class="modal-body ">
+                            <form class="text-start">
+                                <div class="form-group mb-3">
+                                  <label class="mb-2">Tên nguyên liệu</label>
+                                  <input type="text" class="form-control" id="ingredient_name">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="mb-2">Đơn vị</label>
+                                    <input type="text" class="form-control" id="ingredient_measure">
+                                </div>
+                                <div class="">
+                                    <button type="button" class="btn btn-primary" onclick="addIngredient()">Add</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                      </div>
+                    </div>
+                </div>
+            </div>
+            
             <table class="table table-bordered table-striped " id="recipeTable">
                 <thead class="thead-dark">
                 <tr>

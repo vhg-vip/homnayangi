@@ -13,6 +13,29 @@ const settings = {
 const pool = mysql.createPool(settings);
 
 const promisePool = pool.promise();
+const voteStar = async (user_id, recipe_id, points) => {
+    let sql1="SELECT * FROM tbl_rating WHERE user_id=? AND recipe_id=?";
+    const [rows, fields]= await promisePool.query(sql1,[user_id, recipe_id])
+   // console.log(rows)
+    if (JSON.stringify(rows)==='[]') {
+        try{
+        let sql2="INSERT INTO tbl_rating (user_id, recipe_id) VALUES (?, ?)";
+        await promisePool.query(sql2, [user_id, recipe_id]);
+        let sql3="UPDATE tbl_recipe SET rating_count = rating_count + 1, rating_point = rating_point + ? WHERE recipe_id = ?";
+        await promisePool.query(sql3, [points, recipe_id]);
+        let sql4="SELECT rating_count, rating_point FROM tbl_recipe WHERE recipe_id = ?";
+        const [rows2, fields2] = await promisePool.query(sql4, [recipe_id]);
+        const avaragePoints= rows2[0].rating_point/rows2[0].rating_count;
+        return{status:200, message: "successfully", avaragePoints: avaragePoints}
+        }
+        catch (err){
+            return{status:500, message:err.message}
+         }
+    }
+    else {
+        return{status:400, message:"Has already voted"}
+    }
+}
 const getRecipeByIngredient = async(ingredientList) =>{
     let result = new Set();
     for(let ingredient of ingredientList){
@@ -197,6 +220,8 @@ module.exports = {
     getFavoriteRecipe: getFavoriteRecipe,
     deleteFavoriteRecipe: deleteFavoriteRecipe,
     addFavoriteRecipe: addFavoriteRecipe,
+    voteStar,
     checkFavoriteRecipe: checkFavoriteRecipe,
     updateRecipe: updateRecipe
+
 }

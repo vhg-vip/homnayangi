@@ -10,7 +10,10 @@ route.get('/suggestion', recipecontroller.getRecipeSuggestion);
 route.get('/add', recipecontroller.getAddRecipe);
 route.get('/add/search', recipecontroller.getSearchIngredient);
 route.get('/:id', recipecontroller.getRecipeById);
+
+route.post('/voteStar', recipecontroller.voteStar);
 route.post('/suggestion', recipecontroller.getRecipeByIngredient);
+
 
 
 module.exports = route;

@@ -119,18 +119,27 @@ let getSearchIngredient = async (req, res, next) => {
     });
 } 
 const getRecipeByIngredient = async (req, res, next) => {
-     const {ingredientList}= await req.body;
-     var list= JSON.parse(ingredientList)
-  result= await mysql.getRecipeByIngredient(list)
+    const {ingredientList}= await req.body;
+  //  console.log(ingredientList);
+    result= await mysql.getRecipeByIngredient(ingredientList)
   
-  recipeList=[]
-  for(let id of result){ 
-                        console.log(id) 
-                        recipeList.push(id)
-                }
-  //console.log(recipeList)
+    recipeList=[]
+    for(let id of result){ 
+        console.log(id) 
+        recipeList.push(id)
+    }
+//   console.log(recipeList)
   await res.status(200).send({recipeList})
    
+}
+const voteStar= async (req, res, next) => {
+    const {user_id, recipe_id, points} = req.body;
+    //console.log(user_id, recipe_id, points)
+    const {status, message, avaragePoints} = await mysql.voteStar(user_id, recipe_id, points);
+
+    if (status === 200) await res.status(status).send({avaragePoints});
+     else await res.status(status).send({message});
+
 }
 
 module.exports = {
@@ -140,5 +149,6 @@ module.exports = {
     getRecipeSuggestion,
     getAddRecipe,
     getSearchIngredient,
-    getRecipeByIngredient
+    getRecipeByIngredient,
+    voteStar
 }

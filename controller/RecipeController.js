@@ -118,6 +118,20 @@ let getSearchIngredient = async (req, res, next) => {
         query : q
     });
 } 
+const getRecipeByIngredient = async (req, res, next) => {
+     const {ingredientList}= await req.body;
+     var list= JSON.parse(ingredientList)
+  result= await mysql.getRecipeByIngredient(list)
+  
+  recipeList=[]
+  for(let id of result){ 
+                        console.log(id) 
+                        recipeList.push(id)
+                }
+  //console.log(recipeList)
+  await res.status(200).send({recipeList})
+   
+}
 
 module.exports = {
     getRecipes,
@@ -125,5 +139,6 @@ module.exports = {
     getIngredients,
     getRecipeSuggestion,
     getAddRecipe,
-    getSearchIngredient
+    getSearchIngredient,
+    getRecipeByIngredient
 }

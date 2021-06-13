@@ -159,6 +159,18 @@ const addFavoriteRecipe = async(user_id, recipe_id) => {
     await promisePool.query(sql, [user_id, recipe_id]);
 }
 
+const checkFavoriteRecipe = async(user_id, recipe_id) => {
+    let sql = "SELECT * FROM tbl_favorite WHERE user_id = ? AND recipe_id = ?";
+    const [rows, fields] = await promisePool.query(sql, [user_id, recipe_id]);
+    if(rows.length > 0) return true;
+    else return false;
+}
+
+const updateRecipe = async({recipe_id, recipe_name, recipe_tutorior}) => {
+    let sql = "UPDATE tbl_recipe SET recipe_name = ?, recipe_tutorior = ? WHERE recipe_id = ?";
+    await promisePool.query(sql, [recipe_name, recipe_tutorior, recipe_id]);
+}
+
 module.exports = {
     getUsers: getUsers,
     getRecipes: getRecipes,
@@ -179,13 +191,12 @@ module.exports = {
     deleteIngredient: deleteIngredient,
     updateIngredient: updateIngredient,
     getRcipeById: getRcipeById,
-
     getRecipeByIngredient,
-
     updateComfirmRecipe: updateComfirmRecipe,
     addIngredient: addIngredient,
     getFavoriteRecipe: getFavoriteRecipe,
     deleteFavoriteRecipe: deleteFavoriteRecipe,
-    addFavoriteRecipe: addFavoriteRecipe
-
+    addFavoriteRecipe: addFavoriteRecipe,
+    checkFavoriteRecipe: checkFavoriteRecipe,
+    updateRecipe: updateRecipe
 }

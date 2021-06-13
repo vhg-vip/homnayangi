@@ -41,11 +41,11 @@ document.getElementById("ingredient-list").style.display = "none";
     function suggestion(){
         $.ajax({    
             type: "POST",
-            url: "/recipe/getRecipeByIngredient", 
+            url: "/recipe/suggestion", 
             data:{ ingredientList: cart },            
             success: function(data){   
                 console.log(data);
-                location.reload();
+                location.replace('/recipe/suggestion');
             }
         });
     }

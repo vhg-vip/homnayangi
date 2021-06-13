@@ -122,6 +122,17 @@ const getRcipeById = async (recipe_id) => {
     return rows;
 }
 
+const postRecipe = async(recipeName, cachLam, idUser)=> {
+    let sql = "INSERT INTO tbl_recipe (recipe_name, recipe_tutorior, user_id) VALUES (?, ?, ?)";
+    await promisePool.query(sql,[recipeName, cachLam, idUser]);
+}
+
+const postRecipeIngredient = async(recipeID, ingredientId, amount)=> {
+    let sql = "INSERT INTO tbl_ingredient_recipe (ir_amount, recipe_id, ingredient_id) VALUES (?, ?, ?)";
+    await promisePool.query(sql,[amount,recipeID, ingredientId]);
+}
+
+
 module.exports = {
     getUsers: getUsers,
     getRecipes: getRecipes,
@@ -141,5 +152,8 @@ module.exports = {
     deleteRecipe: deleteRecipe,
     deleteIngredient: deleteIngredient,
     updateIngredient: updateIngredient,
-    getRcipeById: getRcipeById
+    getRcipeById: getRcipeById,
+    postRecipe: postRecipe,
+    postRecipeIngredient: postRecipeIngredient
+
 }

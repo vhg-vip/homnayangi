@@ -22,7 +22,7 @@
         </div>
     </div>
 </div>
-<form class="container" action="/recipe/add" method="POST">
+<div class="container" >
     <table class="table" id="table" name="list_incredient">
         <tr class="text-center">
             <th>Tên</th>
@@ -31,17 +31,18 @@
             <th>Hủy</th>
         </tr>
     </table>
-    <p > Cách làm</p>
-    <textarea name="cachlam" id="" class="col-md-12"  rows="20"></textarea>
+    <input type="text" id="recipeName">
+    <p class="title"> Cách làm</p>
+    <textarea name="cachlam" id="cachlam" class="col-md-12"  rows="20"></textarea>
     <div class="text-center">
-        <button type="button" class="btn submit_btn">Xác nhận</button>
+        <button type="button" class="btn submit_btn" onclick="addRecipe()">Xác nhận</button>
     </div>
-</form>
+</div>
 
 <script>
     document.getElementById("ingredient-list").style.display = "none";
     var ingre = document.getElementById("ingre");
-    let list = [];
+    var list = [];
 
     function preAddIngredient(id,name,measure){
         ingre.innerHTML = 
@@ -115,5 +116,34 @@
     function deteleIngredient(id){
         list = list.filter(item => item.id !== id);
         $(`.list_item${id}`).remove();
+    }
+
+    function addRecipe(){
+        let cachlam = $('#cachlam').val();
+        let recipeName = $('#recipeName').val();
+        let listId = [];
+        let listAmount = [];
+        for (let item of list){
+            listId.push(item.id);
+            listAmount.push(item.number);
+        }
+        console.log(list);
+        const data = {
+            list,
+            cachlam,
+            recipeName
+        }
+        console.log(data);
+        $.ajax({    
+            type: "POST",
+            url: "/recipe/add", 
+            data:{ data},            
+            success: function(data){   
+                console.log(data);
+                location.reload();
+            }
+        });
+        alert('Thêm thành công');
+        //listId:listId, listAmount:listAmount
     }
 </script>

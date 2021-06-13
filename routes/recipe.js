@@ -11,5 +11,6 @@ route.get('/add', recipecontroller.getAddRecipe);
 route.get('/add/search', recipecontroller.getSearchIngredient);
 route.get('/:id', recipecontroller.getRecipeById);
 
+route.post('/add', recipecontroller.postAddRecipe);
 
 module.exports = route;

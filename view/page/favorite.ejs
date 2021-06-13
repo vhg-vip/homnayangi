@@ -2,5 +2,12 @@
 
 <div class="container">
     <p class="mb-4" style="font-size: 24px;">Danh sách công thức  yêu thích</p>
-    <%- include('../share/post-favorite.ejs') -%>
+
+    <% for( let item of recipes ) { %>
+        <div>
+            <%- include('../share/post-favorite.ejs', {recipe: item}) -%>
+        </div>
+    <% } %>
+    
 </div>
+

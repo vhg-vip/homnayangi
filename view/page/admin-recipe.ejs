@@ -1,17 +1,30 @@
 <script>
-    function deleteRecipe(id) {
-        console.log(id) 
-        $.ajax({    
-            type: "POST",
-            url: "/admin/delete-recipe", 
-            data:{ recipe_id: id },            
-            success: function(data){   
-                console.log(data);
-                location.reload();
-            }
-        });
-    }
+  function deleteRecipe(id) {
+    console.log(id) 
+    $.ajax({    
+        type: "POST",
+        url: "/admin/delete-recipe", 
+        data:{ recipe_id: id },            
+        success: function(data){   
+            console.log(data);
+            location.reload();
+        }
+    });
+    location.reload();
+  }
 
+  function comfirmRecipe(id) {
+    $.ajax({    
+        type: "POST",
+        url: "/admin/comfirm-recipe", 
+        data:{ recipe_id: id },            
+        success: function(data){   
+            console.log(data);
+            location.reload();
+        }
+    });
+    location.reload();
+  }
 </script>
 <div class="">
     <div class="d-flex">
@@ -19,7 +32,12 @@
             <%- include('./admin-sidebar.ejs') -%>
         </div>
         <div class="p-3 w-100 mx-4">
-            <input class="form-control mr-sm-2 w-25" id="searchRecipe" type="search" placeholder="Search" aria-label="Search">
+            <div class="d-flex justify-content-between my-3">
+              <input class="form-control mr-sm-2 w-25" id="searchRecipe" type="search" placeholder="Search" aria-label="Search">
+              <a href="/recipe/add"><button type="button" class="btn text-white" style="background-color: #93A28B;">Thêm công thức</button></a>
+              
+            </div>
+            
             <table class="table table-bordered table-striped " id="recipeTable">
                 <thead class="thead-dark">
                 <tr>
@@ -42,6 +60,10 @@
                         </td>
                         <td><p><%= recipes[i].recipe_tutorior %> </p></td>
                         <td class="text-center">
+                            <% if (recipes[i].recipe_comfirm === 0) { %>
+                             <button class="btn btn-success" onclick="comfirmRecipe(<%= recipes[i].recipe_id %>)">Comfirm</button>
+                            <% } %>
+                            
                             <button class="btn btn-danger" data-toggle="modal" data-target="#deleteRecipeModal<%= recipes[i].recipe_id %>">Delete</button>
                               <!-- Delete Modal -->
                             <div class="modal fade" id="deleteRecipeModal<%= recipes[i].recipe_id %>" tabindex="-1" role="dialog" aria-hidden="true">

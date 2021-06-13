@@ -133,6 +133,32 @@ const getRcipeById = async (recipe_id) => {
     return rows;
 }
 
+const updateComfirmRecipe = async (recipe_id) => {
+    let sql = "UPDATE tbl_recipe SET recipe_comfirm = 1 WHERE recipe_id = ?";
+    await promisePool.query(sql, [recipe_id]);
+}
+
+const addIngredient = async({ingredient_name, ingredient_measure}) => {
+    let sql = "INSERT INTO tbl_ingredient (ingredient_name, ingredient_measure) VALUES (?, ?)";
+    await promisePool.query(sql, [ingredient_name, ingredient_measure]);
+}
+
+const getFavoriteRecipe = async(user_id) => {
+    let sql = "SELECT * FROM tbl_favorite WHERE user_id = ?";
+    const [rows, fields] = await promisePool.query(sql, [user_id]);
+    return rows;
+}
+
+const deleteFavoriteRecipe = async(user_id, recipe_id) => {
+    let sql = "DELETE FROM tbl_favorite WHERE user_id = ? AND recipe_id = ?";
+    await promisePool.query(sql, [user_id, recipe_id]);
+}
+
+const addFavoriteRecipe = async(user_id, recipe_id) => {
+    let sql = "INSERT INTO tbl_favorite (user_id, recipe_id) VALUES (?, ?)";
+    await promisePool.query(sql, [user_id, recipe_id]);
+}
+
 module.exports = {
     getUsers: getUsers,
     getRecipes: getRecipes,
@@ -153,5 +179,13 @@ module.exports = {
     deleteIngredient: deleteIngredient,
     updateIngredient: updateIngredient,
     getRcipeById: getRcipeById,
-    getRecipeByIngredient
+
+    getRecipeByIngredient,
+
+    updateComfirmRecipe: updateComfirmRecipe,
+    addIngredient: addIngredient,
+    getFavoriteRecipe: getFavoriteRecipe,
+    deleteFavoriteRecipe: deleteFavoriteRecipe,
+    addFavoriteRecipe: addFavoriteRecipe
+
 }

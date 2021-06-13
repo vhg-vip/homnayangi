@@ -43,6 +43,7 @@
     document.getElementById("ingredient-list").style.display = "none";
     var ingre = document.getElementById("ingre");
     var list = [];
+   // console.log(list)
 
     function preAddIngredient(id,name,measure){
         ingre.innerHTML = 
@@ -133,13 +134,14 @@
             cachlam,
             recipeName
         }
-        console.log(data);
+        console.log()
         $.ajax({    
             type: "POST",
             url: "/recipe/add", 
-            data:{ data},            
+            dataType: "json",
+            data: {list, cachlam, recipeName},            
             success: function(data){   
-                console.log(data);
+               // console.log(data);
                 location.reload();
             }
         });

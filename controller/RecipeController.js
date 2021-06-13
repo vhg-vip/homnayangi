@@ -119,15 +119,16 @@ let getSearchIngredient = async (req, res, next) => {
 } 
 
 let postAddRecipe = async (req, res, next) => {
-    /*let id = req.cookies.userId;
+    let id = req.cookies.userId;
     console.log(id);
-    await mysql.postRecipe(req.body.recipeName,req.body.cachlam,id);
+    const {recipeName, cachlam}= req.body;
+    await mysql.postRecipe(recipeName,cachlam,id);
     let listRecipe = await mysql.getRecipes();
     let lastId = listRecipe[listRecipe.length-1].recipe_id;
     console.log(req.body);
     for (let item of req.body.list){
         await mysql.postRecipeIngredient(lastId, item.id, item.number);
-    }*/
+    }
     console.log(req.body);
 } 
 

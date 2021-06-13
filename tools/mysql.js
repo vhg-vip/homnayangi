@@ -4,7 +4,7 @@ const settings = {
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'homnayangi',
+    database: 'db-homnayangi',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0

@@ -13,6 +13,40 @@ const settings = {
 const pool = mysql.createPool(settings);
 
 const promisePool = pool.promise();
+const voteStar = async (user_id, recipe_id, points) => {
+    let sql1="SELECT * FROM tbl_rating WHERE user_id=? AND recipe_id=?";
+    const [rows, fields]= await promisePool.query(sql1,[user_id, recipe_id])
+   // console.log(rows)
+    if (JSON.stringify(rows)==='[]') {
+        try{
+        let sql2="INSERT INTO tbl_rating (user_id, recipe_id) VALUES (?, ?)";
+        await promisePool.query(sql2, [user_id, recipe_id]);
+        let sql3="UPDATE tbl_recipe SET rating_count = rating_count + 1, rating_point = rating_point + ? WHERE recipe_id = ?";
+        await promisePool.query(sql3, [points, recipe_id]);
+        let sql4="SELECT rating_count, rating_point FROM tbl_recipe WHERE recipe_id = ?";
+        const [rows2, fields2] = await promisePool.query(sql4, [recipe_id]);
+        const avaragePoints= rows2[0].rating_point/rows2[0].rating_count;
+        return{status:200, message: "successfully", avaragePoints: avaragePoints}
+        }
+        catch (err){
+            return{status:500, message:err.message}
+         }
+    }
+    else {
+        return{status:400, message:"Has already voted"}
+    }
+}
+const getRecipeByIngredient = async(ingredientList) =>{
+    let result = new Set();
+    for(let ingredient of ingredientList){
+        let sql= "SELECT recipe_id FROM tbl_ingredient_recipe WHERE ingredient_id=?";
+        const [rows, fields]= await promisePool.query(sql, [ingredient])
+        for(let id of rows){
+            result.add(id.recipe_id);
+        }
+    }
+    return result;
+}
 
 const getUsers = async () => {
     let sql = "SELECT * FROM  tbl_user";
@@ -122,6 +156,7 @@ const getRcipeById = async (recipe_id) => {
     return rows;
 }
 
+
 const postRecipe = async(recipeName, cachLam, idUser)=> {
     let sql = "INSERT INTO tbl_recipe (recipe_name, recipe_tutorior, user_id) VALUES (?, ?, ?)";
     await promisePool.query(sql,[recipeName, cachLam, idUser]);
@@ -130,6 +165,45 @@ const postRecipe = async(recipeName, cachLam, idUser)=> {
 const postRecipeIngredient = async(recipeID, ingredientId, amount)=> {
     let sql = "INSERT INTO tbl_ingredient_recipe (ir_amount, recipe_id, ingredient_id) VALUES (?, ?, ?)";
     await promisePool.query(sql,[amount,recipeID, ingredientId]);
+}
+
+
+const updateComfirmRecipe = async (recipe_id) => {
+    let sql = "UPDATE tbl_recipe SET recipe_comfirm = 1 WHERE recipe_id = ?";
+    await promisePool.query(sql, [recipe_id]);
+}
+
+const addIngredient = async({ingredient_name, ingredient_measure}) => {
+    let sql = "INSERT INTO tbl_ingredient (ingredient_name, ingredient_measure) VALUES (?, ?)";
+    await promisePool.query(sql, [ingredient_name, ingredient_measure]);
+}
+
+const getFavoriteRecipe = async(user_id) => {
+    let sql = "SELECT * FROM tbl_favorite WHERE user_id = ?";
+    const [rows, fields] = await promisePool.query(sql, [user_id]);
+    return rows;
+}
+
+const deleteFavoriteRecipe = async(user_id, recipe_id) => {
+    let sql = "DELETE FROM tbl_favorite WHERE user_id = ? AND recipe_id = ?";
+    await promisePool.query(sql, [user_id, recipe_id]);
+}
+
+const addFavoriteRecipe = async(user_id, recipe_id) => {
+    let sql = "INSERT INTO tbl_favorite (user_id, recipe_id) VALUES (?, ?)";
+    await promisePool.query(sql, [user_id, recipe_id]);
+}
+
+const checkFavoriteRecipe = async(user_id, recipe_id) => {
+    let sql = "SELECT * FROM tbl_favorite WHERE user_id = ? AND recipe_id = ?";
+    const [rows, fields] = await promisePool.query(sql, [user_id, recipe_id]);
+    if(rows.length > 0) return true;
+    else return false;
+}
+
+const updateRecipe = async({recipe_id, recipe_name, recipe_tutorior}) => {
+    let sql = "UPDATE tbl_recipe SET recipe_name = ?, recipe_tutorior = ? WHERE recipe_id = ?";
+    await promisePool.query(sql, [recipe_name, recipe_tutorior, recipe_id]);
 }
 
 
@@ -153,7 +227,19 @@ module.exports = {
     deleteIngredient: deleteIngredient,
     updateIngredient: updateIngredient,
     getRcipeById: getRcipeById,
+
     postRecipe: postRecipe,
-    postRecipeIngredient: postRecipeIngredient
+    postRecipeIngredient: postRecipeIngredient,
+
+    getRecipeByIngredient,
+    updateComfirmRecipe: updateComfirmRecipe,
+    addIngredient: addIngredient,
+    getFavoriteRecipe: getFavoriteRecipe,
+    deleteFavoriteRecipe: deleteFavoriteRecipe,
+    addFavoriteRecipe: addFavoriteRecipe,
+    voteStar,
+    checkFavoriteRecipe: checkFavoriteRecipe,
+    updateRecipe: updateRecipe
+
 
 }

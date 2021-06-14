@@ -22,6 +22,7 @@ const renderAdminRecipe = async (req, res, next) => {
             recipe_name: '',
             recipe_image: '',
             recipe_tutorior: '',
+            recipe_comfirm: 0,
             recipe_ingredient: []
         }
         // console.log(recipe);
@@ -37,6 +38,7 @@ const renderAdminRecipe = async (req, res, next) => {
         obj.recipe_name = recipe.recipe_name;
         obj.recipe_image = recipe.recipe_image;
         obj.recipe_tutorior = recipe.recipe_tutorior;
+        obj.recipe_comfirm = recipe.recipe_comfirm;
         data.push(obj);
     }
     // console.log(data);
@@ -56,11 +58,30 @@ const updateIngredient = async (req, res, next) => {
     await mysql.updateIngredient(data);
 }
 
+const comfirmRecipe = async (req, res, next) => {
+    await mysql.updateComfirmRecipe(req.body.recipe_id);
+}
+
+const addIngredient = async (req, res, next) => {
+    let data = await adminmodel.InsertIngredientRequest(req.body);
+    // console.log(data);
+    await mysql.addIngredient(data);
+}
+
+const updateRecipe = async (req, res, next) => {
+    let data = await adminmodel.UpdateRecipeRequest(req.body);
+    // console.log(data);
+    await mysql.updateRecipe(data);
+}
+
 module.exports = {
     renderAdminUser,
     renderAdminRecipe,
     renderAdminIngredient,
     deleteRecipe,
     deleteIngredient,
-    updateIngredient
+    updateIngredient, 
+    comfirmRecipe,
+    addIngredient,
+    updateRecipe
 }

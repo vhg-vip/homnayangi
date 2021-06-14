@@ -1,109 +1,145 @@
 <script>
-    function deleteRecipe(id) {
-        console.log(id) 
-        $.ajax({    
-            type: "POST",
-            url: "/admin/delete-recipe", 
-            data:{ recipe_id: id },            
-            success: function(data){   
-                console.log(data);
-                location.reload();
-            }
-        });
-    }
+  function deleteRecipe(id) {
+    console.log(id) 
+    $.ajax({    
+        type: "POST",
+        url: "/admin/delete-recipe", 
+        data:{ recipe_id: id },            
+        success: function(data){   
+            console.log(data);
+            location.reload();
+        }
+    });
+    location.reload();
+  }
 
+  function comfirmRecipe(id) {
+    $.ajax({    
+        type: "POST",
+        url: "/admin/comfirm-recipe", 
+        data:{ recipe_id: id },            
+        success: function(data){   
+            console.log(data);
+            location.reload();
+        }
+    });
+    location.reload();
+  }
+
+  function editRecipe(id){
+    console.log(id);
+    let name = $(`#edit-name${id}`).val();
+    let tutorior = $(`#edit-tutorior${id}`).val();
+    $.ajax({    
+      type: "POST",
+      url: "/admin/update-recipe", 
+      data:{ recipe_id: id, recipe_name: name, recipe_tutorior: tutorior },            
+      success: function(data){   
+          console.log(data);
+      }
+    });
+    location.reload();
+  }
 </script>
 <div class="">
-    <div class="d-flex">
-        <div class="" style="width: 200px;">
-            <%- include('./admin-sidebar.ejs') -%>
-        </div>
-        <div class="p-3 w-100 mx-4">
-            <input class="form-control mr-sm-2 w-25" id="searchRecipe" type="search" placeholder="Search" aria-label="Search">
-            <table class="table table-bordered table-striped " id="recipeTable">
-                <thead class="thead-dark">
-                <tr>
-                    <th style="background-color: #93A28B; color: white; width: 5%;">#</th>
-                    <th style="background-color: #93A28B; color: white; width: 20%;">Tên</th>
-                    <th style="background-color: #93A28B; color: white; width: 20%;">Nguyên liệu</th>
-                    <th style="background-color: #93A28B; color: white; width: 35%;">Cách làm</th>
-                    <th style="background-color: #93A28B; color: white; width: 15%;">Hành động</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% for( let i = 0; i < recipes.length; i++ ) { %>
-                    <tr>
-                        <td><%= i %> </td>
-                        <td><%= recipes[i].recipe_name %> </td>
-                        <td>
-                            <% for( let item of recipes[i].recipe_ingredient ) { %>
-                                <p><%= item %> </p>
-                            <% } %>
-                        </td>
-                        <td><p><%= recipes[i].recipe_tutorior %> </p></td>
-                        <td class="text-center">
-                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteRecipeModal<%= recipes[i].recipe_id %>">Delete</button>
-                              <!-- Delete Modal -->
-                            <div class="modal fade" id="deleteRecipeModal<%= recipes[i].recipe_id %>" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body ">
-                                        <h3 class="my-4">Bạn có chắc muốn xóa không?</h3>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-primary" onclick="deleteRecipe( <%= recipes[i].recipe_id %> )">Yes</button>
-                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-
-                            <button class="btn btn-warning" data-toggle="modal" data-target="#editRecipeModal<%= recipes[i].recipe_id %>">Edit</button>
-                            <!-- Edit Modal -->
-                            <div class="modal fade" id="editRecipeModal<%= recipes[i].recipe_id %>" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body ">
-                                        <form class="text-start">
-                                            <div class="form-group mb-3">
-                                              <label class="mb-2">Tên</label>
-                                              <input type="text" class="form-control" value="<%= recipes[i].recipe_name %>">
-                                            </div>
-                                            <div class="form-group mb-3">
-                                              <label class="mb-2">Nguyên liệu</label>
-                                              <textarea class="form-control" rows="10"><% for( let item of recipes[i].recipe_ingredient ) { %> <%= item %> 
-<% } %></textarea>
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                <label class="mb-2">Cách làm</label>
-                                                <textarea class="form-control" rows="10" ><%= recipes[i].recipe_tutorior %></textarea>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-primary" onclick="editRecipe( <%= recipes[i].recipe_id %> )">Update</button>
-                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                <% } %>
-                </tbody>
-            </table>
-        </div>
+  <div class="d-flex">
+    <div class="" style="width: 200px;">
+      <%- include('./admin-sidebar.ejs') -%>
     </div>
+    <div class="p-3 w-100 mx-4">
+      <div class="d-flex justify-content-between my-3">
+        <input class="form-control mr-sm-2 w-25" id="searchRecipe" type="search" placeholder="Search" aria-label="Search">
+        <a href="/recipe/add"><button type="button" class="btn text-white" style="background-color: #93A28B;">Thêm công thức</button></a>
+      </div>
+      
+      <table class="table table-bordered table-striped " id="recipeTable">
+        <thead class="thead-dark">
+        <tr>
+          <th style="background-color: #93A28B; color: white; width: 5%;">#</th>
+          <th style="background-color: #93A28B; color: white; width: 20%;">Tên</th>
+          <th style="background-color: #93A28B; color: white; width: 20%;">Nguyên liệu</th>
+          <th style="background-color: #93A28B; color: white; width: 35%;">Cách làm</th>
+          <th style="background-color: #93A28B; color: white; width: 15%;">Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for( let i = 0; i < recipes.length; i++ ) { %>
+          <tr>
+            <td><%= i %> </td>
+            <td><%= recipes[i].recipe_name %> </td>
+            <td>
+              <% for( let item of recipes[i].recipe_ingredient ) { %>
+                  <p><%= item %> </p>
+              <% } %>
+            </td>
+            <td><p><%= recipes[i].recipe_tutorior %> </p></td>
+            <td class="text-center">
+              <% if (recipes[i].recipe_comfirm === 0) { %>
+                <button class="btn btn-success" onclick="comfirmRecipe(<%= recipes[i].recipe_id %>)">Comfirm</button>
+              <% } %>
+              
+              <button class="btn btn-danger" data-toggle="modal" data-target="#deleteRecipeModal<%= recipes[i].recipe_id %>">Delete</button>
+                <!-- Delete Modal -->
+              <div class="modal fade" id="deleteRecipeModal<%= recipes[i].recipe_id %>" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body ">
+                          <h3 class="my-4">Bạn có chắc muốn xóa không?</h3>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="deleteRecipe( <%= recipes[i].recipe_id %> )">Yes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+              <button class="btn btn-warning" data-toggle="modal" data-target="#editRecipeModal<%= recipes[i].recipe_id %>">Edit</button>
+              <!-- Edit Modal -->
+              <div class="modal fade" id="editRecipeModal<%= recipes[i].recipe_id %>" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body ">
+                          <form class="text-start">
+                              <div class="form-group mb-3">
+                                <label class="mb-2">Tên</label>
+                                <input type="text" class="form-control" id="edit-name<%= recipes[i].recipe_id%>" value="<%= recipes[i].recipe_name %>">
+                              </div>
+                              <div class="form-group mb-3">
+                                <label class="mb-2">Nguyên liệu</label>
+                                <textarea class="form-control" rows="10"><% for( let item of recipes[i].recipe_ingredient ) { %> <%= item %> 
+<% } %></textarea>
+                              </div>
+                              <div class="form-group mb-3">
+                                  <label class="mb-2">Cách làm</label>
+                                  <textarea class="form-control" rows="10" id="edit-tutorior<%= recipes[i].recipe_id%>"><%= recipes[i].recipe_tutorior %></textarea>
+                              </div>
+                          </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="editRecipe( <%= recipes[i].recipe_id %> )">Update</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </td>
+          </tr>
+        <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
   
 </div>
 

@@ -21,8 +21,24 @@
             <i class="fas fa-star empty-star"></i>
         </div>
         <div class="like">
-            <i class="far fa-heart unlike d-none"></i>
-            <i class="fas fa-heart liked"></i>
+            <% if (recipe.is_favorite) { %>
+                <span id="dislike<%= recipe.recipe_id %>" onclick="removeFavoriteRecipe(<%= recipe.recipe_id %>, <%= recipe.favorite_user %>)">
+                    <i class="fas fa-heart liked"></i>
+                </span>
+                <span id="like<%= recipe.recipe_id %>" style="display: none;" onclick="addFavoriteRecipe(<%= recipe.recipe_id %>, <%= recipe.favorite_user %>)">
+                    <i class="far fa-heart unlike"></i>
+                </span>
+            <% } else { %>
+                <span id="dislike<%= recipe.recipe_id %>" style="display: none;" onclick="removeFavoriteRecipe(<%= recipe.recipe_id %>, <%= recipe.favorite_user %>)">
+                    <i class="fas fa-heart liked"></i>
+                </span>
+                <span id="like<%= recipe.recipe_id %>" onclick="addFavoriteRecipe(<%= recipe.recipe_id %>, <%= recipe.favorite_user %>)">
+                    <i class="far fa-heart unlike"></i>
+                </span>
+            <% } %>
+            
         </div>
     </div>
 </div>
+
+<script src="../../js/post.js"></script>

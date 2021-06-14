@@ -1,6 +1,9 @@
 const mysql = require('../tools/mysql');
 const recipemodel = require('../model/RecipeModel');
 const express = require('express');
+var LocalStorage = require('node-localstorage').LocalStorage,
+localStorage = new LocalStorage('./scratch');
+
 
 var LocalStorage = require('node-localstorage').LocalStorage,
     localStorage = new LocalStorage('./scratch');
@@ -118,13 +121,12 @@ let getRecipeSuggestion = async (req, res, next) => {
     console.log(suggestionList);
     res.render('page/recipe-suggestion.ejs', {recipes: suggestionList});
 }
-let getAddRecipe = async (req, res, next) => {
 
+let getAddRecipe = async (req, res, next) => {
+    let result = await mysql.getAllIngredients();
     res.render('page/add-recipe.ejs',  {
-        ingredients : [],
-        query : ""
-    }
-    );
+        ingredients : result
+    });
 
 } 
 
@@ -212,6 +214,20 @@ const voteStar= async (req, res, next) => {
 
 }
 
+let postAddRecipe = async (req, res, next) => {
+    let id = req.cookies.userId;
+    console.log(id);
+    const {recipeName, cachlam}= req.body;
+    await mysql.postRecipe(recipeName,cachlam,id);
+    let listRecipe = await mysql.getRecipes();
+    let lastId = listRecipe[listRecipe.length-1].recipe_id;
+    console.log(req.body);
+    for (let item of req.body.list){
+        await mysql.postRecipeIngredient(lastId, item.id, item.number);
+    }
+    console.log(req.body);
+} 
+
 module.exports = {
     getRecipes,
     getRecipeById,
@@ -219,6 +235,10 @@ module.exports = {
     getRecipeSuggestion,
     getAddRecipe,
     getSearchIngredient,
+
+    postAddRecipe,
+
     getRecipeByIngredient,
     voteStar
+
 }

@@ -4,7 +4,7 @@ const settings = {
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'db-homnayangi',
+    database: 'homnayangi',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -156,6 +156,18 @@ const getRcipeById = async (recipe_id) => {
     return rows;
 }
 
+
+const postRecipe = async(recipeName, cachLam, idUser)=> {
+    let sql = "INSERT INTO tbl_recipe (recipe_name, recipe_tutorior, user_id) VALUES (?, ?, ?)";
+    await promisePool.query(sql,[recipeName, cachLam, idUser]);
+}
+
+const postRecipeIngredient = async(recipeID, ingredientId, amount)=> {
+    let sql = "INSERT INTO tbl_ingredient_recipe (ir_amount, recipe_id, ingredient_id) VALUES (?, ?, ?)";
+    await promisePool.query(sql,[amount,recipeID, ingredientId]);
+}
+
+
 const updateComfirmRecipe = async (recipe_id) => {
     let sql = "UPDATE tbl_recipe SET recipe_comfirm = 1 WHERE recipe_id = ?";
     await promisePool.query(sql, [recipe_id]);
@@ -194,6 +206,7 @@ const updateRecipe = async({recipe_id, recipe_name, recipe_tutorior}) => {
     await promisePool.query(sql, [recipe_name, recipe_tutorior, recipe_id]);
 }
 
+
 module.exports = {
     getUsers: getUsers,
     getRecipes: getRecipes,
@@ -214,6 +227,10 @@ module.exports = {
     deleteIngredient: deleteIngredient,
     updateIngredient: updateIngredient,
     getRcipeById: getRcipeById,
+
+    postRecipe: postRecipe,
+    postRecipeIngredient: postRecipeIngredient,
+
     getRecipeByIngredient,
     updateComfirmRecipe: updateComfirmRecipe,
     addIngredient: addIngredient,
@@ -223,5 +240,6 @@ module.exports = {
     voteStar,
     checkFavoriteRecipe: checkFavoriteRecipe,
     updateRecipe: updateRecipe
+
 
 }

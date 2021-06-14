@@ -15,7 +15,8 @@
 }
 .title{
     color: #93A28B;
-    margin-bottom: 60px;
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
 .search{
     position: relative;
@@ -26,6 +27,7 @@
     padding-left: 30px;
     padding-bottom: 10px;
     padding-top: 10px;
+    margin-bottom: 20px;
 }
 .search_input:focus{
     outline: none;
@@ -52,4 +54,24 @@
     border-radius: 100px;
     color: white;
     padding: 15px 50px;
+    margin-top: 50px;
+}
+p{
+    margin: 0;
+}
+li{
+    cursor: pointer;
+}
+.pre_add{
+    display: flex;
+    justify-content: space-between;
+}
+.input_number{
+    padding: 0;
+    border: none;
+    border-bottom: solid 1px #7F7E7E;
+}
+.input_number:focus{
+    outline: none;
+    border-bottom: solid 1px #7F7E7E;
 }

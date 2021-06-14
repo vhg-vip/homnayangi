@@ -2,9 +2,12 @@
 
 <link rel="stylesheet" href="../../stylesheets/add-recipe.css">
 <div class="suggestion_container container">
+    <div class="text-center">
+        <p class="title">Tên công thức</p>
+        <input type="text" class="search_input" id="recipeName">
+    </div>
+    
     <div class="row">
-        <div class="col-md-8 px-5" id="ingre">
-        </div>
         <div class="col-md-4">
             <p class="title">Tìm kiếm nguyên liệu</p>
             <div class="search">
@@ -20,9 +23,10 @@
                 
             </ul>
         </div>
+        <div class="col-md-8 px-5" id="ingre">
+        </div>
     </div>
-</div>
-<div class="container" >
+    <p class="title">Danh sách nguyên liệu</p>
     <table class="table" id="table" name="list_incredient">
         <tr class="text-center">
             <th>Tên</th>
@@ -31,7 +35,6 @@
             <th>Hủy</th>
         </tr>
     </table>
-    <input type="text" id="recipeName">
     <p class="title"> Cách làm</p>
     <textarea name="cachlam" id="cachlam" class="col-md-12"  rows="20"></textarea>
     <div class="text-center">
@@ -113,6 +116,7 @@
                     </th>
                 </tr>
             `)
+        ingre.innerHTML = "";
     }
     function deteleIngredient(id){
         list = list.filter(item => item.id !== id);

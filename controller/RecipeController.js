@@ -61,7 +61,7 @@ let getRecipes = async (req, res, next) => {
         
         // console.log(data);
     }
-    
+    // console.log(data);
     // res.json(result);
     res.render('page/recipes.ejs', {recipes: data});
 }

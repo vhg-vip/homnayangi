@@ -4,10 +4,10 @@ const authMiddleware = require('../middleware/auth.middleware');
 
 const recipecontroller = require('../controller/RecipeController');
 
-route.get('', authMiddleware.requireAuth, recipecontroller.getRecipes);
+route.get('',  recipecontroller.getRecipes);
 route.get('/ingredient', recipecontroller.getIngredients);
 route.get('/suggestion', recipecontroller.getRecipeSuggestion);
-route.get('/add', recipecontroller.getAddRecipe);
+route.get('/add', authMiddleware.requireAuth, recipecontroller.getAddRecipe);
 route.get('/add/search', recipecontroller.getSearchIngredient);
 route.get('/:id', recipecontroller.getRecipeById);
 route.post('/add', recipecontroller.postAddRecipe);

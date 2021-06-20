@@ -147,6 +147,7 @@ let addFavoriteRecipe = async (req, res, next) => {
 }
 
 let getProfile = async (req, res, next) => {
+
     res.render('page/profile.ejs');
 }
 
@@ -264,15 +265,15 @@ let postForgotPassword = async (req, res, next) => {
     let result = await mysql.getUserById(id);
     // console.log(id);
     // console.log(result[0]);
-    if(req.body.new_password !== req.body.cf_new_password){
+    if(Number(req.body.verify_code) !== result[0].verify_code){
         res.render('page/change-forgot-password.ejs', {
-            error: "Mật khẩu không khớp",
+            error: "Mã xác thực không đúng",
             values: req.body
         });
     }
-    else if(Number(req.body.verify_code) !== result[0].verify_code){
+    else if(req.body.new_password !== req.body.cf_new_password){
         res.render('page/change-forgot-password.ejs', {
-            error: "Mã xác thực không đúng",
+            error: "Mật khẩu không khớp",
             values: req.body
         });
     }

@@ -258,6 +258,11 @@ let getVerifyCode = async (req, res, next) => {
     }
 }
 
+let checkNewPassword = async (newpw, cfnewpw) => {
+    if(newpw !== cfnewpw) return false;
+    return true;
+}
+
 let postForgotPassword = async (req, res, next) => {
     // console.log(req.body);
     // console.log(localStorage.getItem('user_id'));
@@ -265,15 +270,16 @@ let postForgotPassword = async (req, res, next) => {
     let result = await mysql.getUserById(id);
     // console.log(id);
     // console.log(result[0]);
-    if(Number(req.body.verify_code) !== result[0].verify_code){
-        res.render('page/change-forgot-password.ejs', {
-            error: "Mã xác thực không đúng",
-            values: req.body
-        });
-    }
-    else if(req.body.new_password !== req.body.cf_new_password){
+    if(!checkNewPassword(req.body.new_password, req.body.cf_new_password)){
         res.render('page/change-forgot-password.ejs', {
             error: "Mật khẩu không khớp",
+            values: req.body
+        });
+    
+    }
+    else if(Number(req.body.verify_code) !== result[0].verify_code){
+        res.render('page/change-forgot-password.ejs', {
+            error: "Mã xác thực không đúng",
             values: req.body
         });
     }

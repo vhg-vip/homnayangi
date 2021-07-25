@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = {   
     UserLoginFactor: ( { user_name, user_password} ) => {
         return { user_name, user_password }
     },
